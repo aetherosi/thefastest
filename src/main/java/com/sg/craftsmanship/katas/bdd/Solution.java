@@ -1,20 +1,28 @@
 package com.sg.craftsmanship.katas.bdd;
 
-import javafx.util.Pair;
-
 import java.util.*;
 
 public class Solution {
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
+        List<String> words = new ArrayList<>();
+        Dictionary dictionary = new Dictionary();
+        Map<String, Integer> lettersMap = generateLetters();
+
         int N = in.nextInt();
         if (in.hasNextLine()) {
             in.nextLine();
         }
         for (int i = 0; i < N; i++) {
-            String W = in.nextLine();
+            words.add(in.nextLine());
         }
-        String LETTERS = in.nextLine();
+
+        dictionary.setWords(words);
+        String letters = in.nextLine();
+
+        List<String> allPossibleWords = findAllPossibleWords(dictionary, letters);
+        System.out.println(findHighestValuedWord(lettersMap, allPossibleWords));
+
     }
 
     public static List<String> generateWords() {
@@ -27,42 +35,42 @@ public class Solution {
 
 
     public static Map<String, Integer> generateLetters() {
-        Map<String, Integer> letters = new HashMap<>();
+        Map<String, Integer> lettersMap = new HashMap<>();
 
-        letters.put("e", 1);
-        letters.put("a", 1);
-        letters.put("i", 1);
-        letters.put("o", 1);
-        letters.put("n", 1);
-        letters.put("r", 1);
-        letters.put("t", 1);
-        letters.put("l", 1);
-        letters.put("s", 1);
-        letters.put("u", 1);
+        lettersMap.put("e", 1);
+        lettersMap.put("a", 1);
+        lettersMap.put("i", 1);
+        lettersMap.put("o", 1);
+        lettersMap.put("n", 1);
+        lettersMap.put("r", 1);
+        lettersMap.put("t", 1);
+        lettersMap.put("l", 1);
+        lettersMap.put("s", 1);
+        lettersMap.put("u", 1);
 
-        letters.put("d", 2);
-        letters.put("g", 2);
+        lettersMap.put("d", 2);
+        lettersMap.put("g", 2);
 
-        letters.put("b", 3);
-        letters.put("c", 3);
-        letters.put("m", 3);
-        letters.put("p", 3);
+        lettersMap.put("b", 3);
+        lettersMap.put("c", 3);
+        lettersMap.put("m", 3);
+        lettersMap.put("p", 3);
 
-        letters.put("f", 4);
-        letters.put("h", 4);
-        letters.put("v", 4);
-        letters.put("w", 4);
-        letters.put("y", 4);
+        lettersMap.put("f", 4);
+        lettersMap.put("h", 4);
+        lettersMap.put("v", 4);
+        lettersMap.put("w", 4);
+        lettersMap.put("y", 4);
 
-        letters.put("k", 5);
+        lettersMap.put("k", 5);
 
-        letters.put("j", 8);
-        letters.put("x", 8);
+        lettersMap.put("j", 8);
+        lettersMap.put("x", 8);
 
-        letters.put("q", 8);
-        letters.put("z", 10);
+        lettersMap.put("q", 8);
+        lettersMap.put("z", 10);
 
-        return letters;
+        return lettersMap;
 
     }
 
@@ -70,15 +78,14 @@ public class Solution {
         List<String> possibleWords = new ArrayList<>();
 
         for (String word : dictionary.getWords()) {
-            String tab = letters;
-            String modWord = word;
-            for (char c : tab.toCharArray()) {
-                if (! modWord.isEmpty()) {
+            String wordToPlay = word;
+            for (char c : letters.toCharArray()) {
+                if (!wordToPlay.isEmpty()) {
                     String letter = "" + c;
-                    if (modWord.contains(letter)) {
-                        modWord = modWord.replaceFirst(letter, "");
+                    if (wordToPlay.contains(letter)) {
+                        wordToPlay = wordToPlay.replaceFirst(letter, "");
 
-                        if (modWord.isEmpty()){
+                        if (wordToPlay.isEmpty()) {
                             possibleWords.add(word);
                         }
                     }
@@ -105,6 +112,18 @@ public class Solution {
             }
         }
 
-        return finalWord + " - " + total;
+        return finalWord;
+    }
+
+    public static class Dictionary {
+        private List<String> words;
+
+        public void setWords(List<String> words) {
+            this.words = words;
+        }
+
+        public List<String> getWords() {
+            return words;
+        }
     }
 }

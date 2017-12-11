@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class SolutionTest {
 
-    private Dictionary dictionary;
+    private Solution.Dictionary dictionary;
 
     private String letters;
 
     @Before
     public void init() {
-        dictionary = new Dictionary();
+        dictionary = new Solution.Dictionary();
         letters = "hicquwh";
     }
 
@@ -55,7 +55,7 @@ public class SolutionTest {
 
         List<String> possibleWords = Solution.findAllPossibleWords(dictionary, letters);
 
-        Assertions.assertThat(Solution.findHighestValuedWord(lettersMap, possibleWords)).isEqualTo("which - 16");
+        Assertions.assertThat(Solution.findHighestValuedWord(lettersMap, possibleWords)).isEqualTo("which");
 
     }
 
